@@ -1,0 +1,5 @@
+com/okta/developer/docker_microservices/ui/controller/SchoolController.class
+com/okta/developer/docker_microservices/ui/UIWebApplication.class
+com/okta/developer/docker_microservices/ui/config/SpringSecurityConfiguration.class
+com/okta/developer/docker_microservices/ui/dto/TeachingClassDto.class
+com/okta/developer/docker_microservices/ui/controller/SchoolController$1.class

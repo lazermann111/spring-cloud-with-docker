@@ -1,0 +1,37 @@
+version: '3'
+services:
+  discovery:
+    image: krokhmalyukv/school-microservices:0.1
+    ports:
+    - 8761:8761
+  config:
+    image: krokhmalyukv/school-microservices:0.1
+    volumes:
+    - ./config-data:/var/config-data
+    environment:
+    - JAVA_OPTS=
+      -DEUREKA_SERVER=http://discovery:8761/eureka
+      -Dspring.cloud.config.server.native.searchLocations=/var/config-data
+    depends_on:
+    - discovery
+    ports:
+    - 8888:8888
+  school-service:
+    image: krokhmalyukv/school-microservices:0.1
+    environment:
+    - JAVA_OPTS=
+      -DEUREKA_SERVER=http://discovery:8761/eureka
+    depends_on:
+    - discovery
+    - config
+  school-ui:
+    image: krokhmalyukv/school-microservices:0.1
+    environment:
+    - JAVA_OPTS=
+      -DEUREKA_SERVER=http://discovery:8761/eureka
+    restart: on-failure
+    depends_on:
+    - discovery
+    - config
+    ports:
+    - 8080:8080
