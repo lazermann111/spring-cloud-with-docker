@@ -5,6 +5,7 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>test</groupId>
     <artifactId>school-ui</artifactId>
 
     <parent>
@@ -15,7 +16,6 @@
     </parent>
 
     <properties>
-        <start-class>com.okta.developer.docker_microservices.ui.UIWebApplication</start-class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>

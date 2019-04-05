@@ -1,11 +1,17 @@
 version: '3'
 services:
   discovery:
-    image: krokhmalyukv/school-microservices:0.1
+    container_name: discovery-server
+    build:
+      ./discovery
     ports:
-    - 8761:8761
+      - 8761:8761
+    networks:
+    - webnet
   config:
-    image: krokhmalyukv/school-microservices:0.1
+    container_name: config
+    build:
+      ./config
     volumes:
     - ./config-data:/var/config-data
     environment:
@@ -15,17 +21,25 @@ services:
     depends_on:
     - discovery
     ports:
-    - 8888:8888
+      - 8888:8888
+    networks:
+    - webnet
   school-service:
-    image: krokhmalyukv/school-microservices:0.1
+    build:
+      ./school-server
     environment:
     - JAVA_OPTS=
       -DEUREKA_SERVER=http://discovery:8761/eureka
     depends_on:
     - discovery
     - config
+    ports:
+     - 8081:8081
+    networks:
+    - webnet
   school-ui:
-    image: krokhmalyukv/school-microservices:0.1
+    build:
+      ./school-ui
     environment:
     - JAVA_OPTS=
       -DEUREKA_SERVER=http://discovery:8761/eureka
@@ -34,4 +48,9 @@ services:
     - discovery
     - config
     ports:
-    - 8080:8080
+      - 8080:8080
+    networks:
+    - webnet
+
+networks:
+  webnet:
