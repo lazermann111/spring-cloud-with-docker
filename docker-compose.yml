@@ -1,7 +1,7 @@
 version: '3'
 services:
-  discovery:
-    container_name: discovery-server
+  discovery_33:
+    container_name: discovery-server #== services.discovery.container_name
     build:
       ./discovery
     ports:
@@ -19,7 +19,7 @@ services:
       -DEUREKA_SERVER=http://discovery:8761/eureka
       -Dspring.cloud.config.server.native.searchLocations=/var/config-data
     depends_on:
-    - discovery
+    - discovery_33
     ports:
       - 8888:8888
     networks:
@@ -31,7 +31,7 @@ services:
     - JAVA_OPTS=
       -DEUREKA_SERVER=http://discovery:8761/eureka
     depends_on:
-    - discovery
+    - discovery_33
     - config
     ports:
      - 8081:8081
@@ -45,12 +45,18 @@ services:
       -DEUREKA_SERVER=http://discovery:8761/eureka
     restart: on-failure
     depends_on:
-    - discovery
+    - discovery_33
     - config
     ports:
       - 8080:8080
     networks:
     - webnet
+#  mysql_db:
+#    image: mysql:latest
+#    networks:
+#    - webnet
+#    ports:
+#      - 3306:3306
 
 networks:
   webnet:
